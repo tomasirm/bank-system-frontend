@@ -1,0 +1,30 @@
+<form  (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="dni">Rut</label>
+    <input type="text" class="form-control" [(ngModel)]="customerDto.dni" name="dni" id="dni"/>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" [(ngModel)]="customerDto.email" name="email" id="email"/>
+  </div>
+  <div class="form-group">
+    <label for="names">Nombres</label>
+    <input type="names" class="form-control" [(ngModel)]="customerDto.names" name="password" id="names"/>
+  </div>
+  <div class="form-group">
+    <label for="surnames">Apellidos</label>
+    <input type="surnames" class="form-control" [(ngModel)]="customerDto.surnames" name="password" id="surnames"/>
+  </div>
+  <div class="form-group">
+    <label for="password">Contrasena</label>
+    <input type="password" class="form-control" [(ngModel)]="customerDto.password" name="password" id="password"/>
+  </div>
+  <div class="form-group">
+    <button [disabled]="isLoading" class="btn btn-primary">
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+      Registrarse
+    </button>
+    <a [routerLink]="'/login'" class="btn btn-link">Volver</a>
+  </div>
+  <app-toast *ngIf="message" [message]="message" [class]="class"></app-toast>
+</form>

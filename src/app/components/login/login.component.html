@@ -1,0 +1,21 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" [(ngModel)]="loginDto.email" name="email" id="email" [required]="true"/>
+  </div>
+  <div class="form-group">
+    <label for="password">Contrasena</label>
+    <input type="password" class="form-control" [(ngModel)]="loginDto.password" name="password" id="password" [required]="true"/>
+  </div>
+  <div class="form-group">
+    <button [disabled]="isLoading" class="btn btn-primary" type="submit" >
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+      Login
+    </button>
+    <button class="btn btn-primary" [routerLink]="['/register']">
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+      Registrarse
+    </button>
+  </div>
+  <app-toast *ngIf="message" [message]="message" [class]="class"></app-toast>
+</form>
