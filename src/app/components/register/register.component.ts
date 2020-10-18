@@ -24,7 +24,6 @@ export class RegisterComponent implements OnInit {
       this.isLoading = false;
       this.message = 'Customer saved';
       this.class = 'bg-info text-light';
-      console.log(data);
     }, error => {
       this.isLoading = false;
       this.message = error.error.message;
