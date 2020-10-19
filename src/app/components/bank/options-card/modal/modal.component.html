@@ -15,11 +15,11 @@
         <div class="bg-white rounded-lg shadow-sm p-5">
           <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
             <ng-template ngFor let-transactionType let-i="index" [ngForOf]="transactionTypes">
-              <li class="nav-item" (click)="selectedType = transactionType.name">
-                <a data-toggle="pill" class="nav-link rounded-pill"
+              <li class="nav-item" (click)="selectedType = transactionType.name; alert.message = ''">
+                <a data-toggle="pill" class="nav-link rounded-pill pointer"
                    [class.active]="transactionType.name == selectedType">
                   <i class="fa fa-credit-card"></i>
-                  {{transactionType.name}}
+                  {{transactionType.label}}
                 </a>
               </li>
             </ng-template>
@@ -27,19 +27,31 @@
           <div class="tab-content">
             <div id="nav-tab-card" class="tab-pane fade show active">
               <form role="form" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
-                <div class="form-group" formGroupName="transactionDto">
+                <div class="form-group">
                   <label for="amount">Monto</label>
-                  <input formControlName="amount" type="text" name="amount" required class="form-control" id="amount">
+                  <input formControlName="amount" type="text" name="amount" class="form-control" id="amount"
+                         [ngClass]="{ 'is-invalid': submitted && f.amount.errors }">
+                  <div *ngIf="transactionForm.get('amount').hasError('required') && transactionForm.get('amount').touched">Es requerido el monto</div>
                 </div>
-                <div class="form-group" formGroupName="transactionDto">
+                <div class="form-group" *ngIf="selectedType == 'TRANSFERENCIA_A_TERCEROS'">
                   <label for="dniDestiny">Rut destino</label>
-                  <div class="input-group">
-                    <input formControlName="dniDestiny" type="text" name="dniDestiny" class="form-control" required
+
+                    <input formControlName="dniDestiny" type="text" name="dniDestiny" class="form-control"
                            id="dniDestiny">
+                    <div *ngIf="transactionForm.get('dniDestiny').hasError('required') && transactionForm.get('dniDestiny').touched">Es requerido el rut destino
+
                   </div>
                 </div>
                 <p class="alert alert-{{alert.style}}" *ngIf="alert.message.length > 0">{{alert.message}}</p>
-                <button type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"> Confirm
+                <button type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                        [disabled]="transactionForm.get('amount').hasError('required')
+                                  || transactionForm.get('dniDestiny').hasError('required') || loading"
+                        *ngIf="selectedType == 'TRANSFERENCIA_A_TERCEROS'"> Aceptar
+                </button>
+                <button *ngIf="selectedType !== 'TRANSFERENCIA_A_TERCEROS'" type="submit"
+                        class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"
+                        [disabled]="transactionForm.get('amount').hasError('required') || loading"
+                > <i *ngIf="loading" class="fa fa-spinner"></i>Aceptar
                 </button>
               </form>
             </div>
@@ -50,6 +62,5 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-success" (click)="activeModal.close('Close click')">Create</button>
 </div>
 

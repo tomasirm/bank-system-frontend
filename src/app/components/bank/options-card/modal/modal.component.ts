@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CustomerDto} from '../../../../dto/Customer.dto';
 import {TransactionTypesDto} from '../../../../dto/TransactionTypesDto';
 import {TransactionService} from '../../../../services/transaction.service';
@@ -27,6 +27,8 @@ export class ModalComponent implements OnInit {
   transactionTypeStr = '';
   selectedType = 'CARGA_SALDO';
   alert = {message: '', style: ''};
+  submitted = false;
+  loading = false;
   @Output() transactionEmitter = new EventEmitter<boolean>();
 
   ngOnInit(): void {
@@ -37,27 +39,27 @@ export class ModalComponent implements OnInit {
   // tslint:disable-next-line:typedef
   createFormGroupWithBuilderAndModel(formBuilder: FormBuilder) {
     return formBuilder.group({
-      transactionDto: new FormGroup({
         customerDto: formBuilder.group(new CustomerDto()),
-        amount: new FormControl(),
+        amount: new FormControl('', Validators.required),
         transactionType: new FormControl(),
-        dniDestiny: new FormControl(),
-      })
+        dniDestiny: new FormControl('', Validators.required),
     });
   }
 
   onSubmit(): void {
-    this.transactionForm.value.transactionDto.amount = Number(this.transactionForm.value.transactionDto.amount);
-    this.transactionForm.value.transactionDto.transactionType = this.selectedType;
-    this.transactionForm.value.transactionDto.customerDto = this.currentUser;
-    const transactionDto: TransactionDto = this.transactionForm.value.transactionDto;
-    console.log(JSON.stringify(this.transactionForm.value));
-    this.transactionService.saveTransaction(this.transactionForm.value.transactionDto).subscribe(data => {
+    this.transactionForm.value.amount = Number(this.transactionForm.value.amount);
+    this.transactionForm.value.transactionType = this.selectedType;
+    this.transactionForm.value.customerDto = this.currentUser;
+    const transactionDto: TransactionDto = this.transactionForm.value;
+    this.loading = true;
+    this.transactionService.saveTransaction(this.transactionForm.value).subscribe(data => {
+      this.loading = false;
       this.alert.message = data.message;
       this.alert.style = 'success';
       this.transactionEmitter.emit(true);
     }, error => {
       this.alert.message = error.error.message;
+      this.loading = false;
       this.alert.style = 'danger';
       console.log(error);
     });
@@ -66,8 +68,20 @@ export class ModalComponent implements OnInit {
   getAllTransactionTypes(): void {
     this.transactionService.getAllTransactionsTypes().subscribe(data => {
       this.transactionTypes = data;
+      this.transactionTypes = this.transactionTypes.filter(transactionType => transactionType.name !== 'TRANSFERENCIA_DE_TERCEROS');
     }, error => {
       console.log(error);
     });
   }
+
+  isRequiredField(field: string): boolean {
+    const formField = this.transactionForm.get(field);
+    if (!formField || !formField.validator) {
+      return false;
+    }
+    const validator = formField.validator({} as AbstractControl);
+    return (validator && validator.required);
+  }
+  // tslint:disable-next-line:typedef
+  get f() { return this.transactionForm.controls; }
 }

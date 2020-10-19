@@ -3,4 +3,5 @@ export class TransactionTypesDto{
   description: string;
   createdAt: string;
   updateAt: string;
+  label: string;
 }
