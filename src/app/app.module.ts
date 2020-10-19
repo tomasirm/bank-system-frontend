@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {ClientComponent} from './components/client/client.component';
 import {BankComponent} from './components/bank/bank.component';
 import {LoginComponent} from './components/login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { RegisterComponent } from './components/register/register.component';
 import { TransactionsTableComponent } from './components/bank/transactions-table/transactions-table.component';
@@ -15,6 +15,7 @@ import { BalanceCardComponent } from './components/bank/balance-card/balance-car
 import { OptionsCardComponent } from './components/bank/options-card/options-card.component';
 import { ToastComponent } from './shared/toast/toast.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './components/bank/options-card/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UserCardComponent,
     BalanceCardComponent,
     OptionsCardComponent,
-    ToastComponent
+    ToastComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     HttpClientModule,
     NgbModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

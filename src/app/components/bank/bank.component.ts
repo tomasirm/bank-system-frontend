@@ -20,6 +20,7 @@ export class BankComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.loginService.currentCustomer;
+    console.log(this.currentUser);
     this.getBalance();
   }
 

@@ -15,16 +15,16 @@ export class LoginService {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
   }
 
-  ENDPOINT_URL = 'http://localhost:3000/auth/';
+  ENDPOINT_URL = 'http://localhost:3000/';
   private currentUserSubject: BehaviorSubject<any>;
   private customerSubject: BehaviorSubject<any>;
 
   register(customerDto: CustomerDto): Observable<any> {
-    return this.http.post(this.ENDPOINT_URL + 'register', customerDto);
+    return this.http.post(this.ENDPOINT_URL + 'customer/register', customerDto);
   }
 
   login(loginDto: LoginDto): Observable<any> {
-    return this.http.post(this.ENDPOINT_URL + 'login', loginDto);
+    return this.http.post(this.ENDPOINT_URL + 'customer/login', loginDto);
   }
 
   getAllUsers(): Observable<any> {
