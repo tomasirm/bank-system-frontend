@@ -26,6 +26,7 @@ export class ModalComponent implements OnInit {
   transactionForm: FormGroup;
   transactionTypeStr = '';
   selectedType = 'CARGA_SALDO';
+  alert = {message: '', style: ''};
   @Output() transactionEmitter = new EventEmitter<boolean>();
 
   ngOnInit(): void {
@@ -52,9 +53,12 @@ export class ModalComponent implements OnInit {
     const transactionDto: TransactionDto = this.transactionForm.value.transactionDto;
     console.log(JSON.stringify(this.transactionForm.value));
     this.transactionService.saveTransaction(this.transactionForm.value.transactionDto).subscribe(data => {
-      console.log(data);
+      this.alert.message = data.message;
+      this.alert.style = 'success';
       this.transactionEmitter.emit(true);
     }, error => {
+      this.alert.message = error.error.message;
+      this.alert.style = 'danger';
       console.log(error);
     });
   }

@@ -16,6 +16,7 @@ import { OptionsCardComponent } from './components/bank/options-card/options-car
 import { ToastComponent } from './shared/toast/toast.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './components/bank/options-card/modal/modal.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { ModalComponent } from './components/bank/options-card/modal/modal.compo
     BalanceCardComponent,
     OptionsCardComponent,
     ToastComponent,
-    ModalComponent
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +39,7 @@ import { ModalComponent } from './components/bank/options-card/modal/modal.compo
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

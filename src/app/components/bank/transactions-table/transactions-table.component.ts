@@ -11,11 +11,16 @@ import {CustomerDto} from '../../../dto/Customer.dto';
 })
 export class TransactionsTableComponent implements OnInit {
 
-  constructor(private bankService: BankService,
-              private loginService: LoginService) {
+  constructor() {
   }
   @Input() currentUser: CustomerDto;
   @Input() balance: number;
   @Input() transactions: TransactionDto[] = [];
-  ngOnInit(): void {}
+  activePage = 0;
+  p: number;
+  ngOnInit(): void {
+  }
+  displayActivePage(activePageNumber: number): void{
+    this.activePage = activePageNumber;
+  }
 }
