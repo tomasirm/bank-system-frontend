@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {CustomerDto} from '../dto/Customer.dto';
 import {LoginDto} from '../dto/Login.dto';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,20 +16,16 @@ export class LoginService {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
   }
 
-  ENDPOINT_URL = 'http://localhost:3000/';
+  ENDPOINT_URL = environment.ENDPOINTS.API;
   private currentUserSubject: BehaviorSubject<any>;
-  private customerSubject: BehaviorSubject<any>;
 
   register(customerDto: CustomerDto): Observable<any> {
     return this.http.post(this.ENDPOINT_URL + 'customer/register', customerDto);
   }
 
   login(loginDto: LoginDto): Observable<any> {
+    console.log(this.ENDPOINT_URL);
     return this.http.post(this.ENDPOINT_URL + 'customer/login', loginDto);
-  }
-
-  getAllUsers(): Observable<any> {
-    return this.http.get(this.ENDPOINT_URL + 'getAllUsers');
   }
 
   public get currentUserValue(): any {

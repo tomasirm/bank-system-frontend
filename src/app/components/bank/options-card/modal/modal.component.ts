@@ -74,14 +74,6 @@ export class ModalComponent implements OnInit {
     });
   }
 
-  isRequiredField(field: string): boolean {
-    const formField = this.transactionForm.get(field);
-    if (!formField || !formField.validator) {
-      return false;
-    }
-    const validator = formField.validator({} as AbstractControl);
-    return (validator && validator.required);
-  }
   // tslint:disable-next-line:typedef
   get f() { return this.transactionForm.controls; }
 }

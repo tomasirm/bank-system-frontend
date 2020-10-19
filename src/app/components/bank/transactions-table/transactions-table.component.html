@@ -25,13 +25,13 @@
             <td>{{transaction.description}}</td>
             <td
               *ngIf="(transaction.transactionTypeDto.name == 'RETIRO_SALDO' || transaction.transactionTypeDto.name == 'TRANSFERENCIA_A_TERCEROS');else noAmount">
-              {{transaction.amount}}
+              <span style="color: red">${{formatCurrency(transaction.amount )}}</span>
             </td>
             <td
               *ngIf="(transaction.transactionTypeDto.name == 'CARGA_SALDO' || transaction.transactionTypeDto.name == 'TRANSFERENCIA_DE_TERCEROS');else noAmount">
-              {{transaction.amount}}
+              <span style="color: green">${{formatCurrency(transaction.amount )}}</span>
             </td>
-            <td>{{transaction.historicalBalance}}</td>
+            <td>${{formatCurrency(transaction.historicalBalance)}}</td>
           </tr>
         </ng-template>
         </tbody>

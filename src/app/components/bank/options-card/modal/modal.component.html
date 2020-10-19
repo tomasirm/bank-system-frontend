@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Nueva transaccion</h4>
+  <h4 class="modal-title">Nueva transacción</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -31,14 +31,14 @@
                   <label for="amount">Monto</label>
                   <input formControlName="amount" type="text" name="amount" class="form-control" id="amount"
                          [ngClass]="{ 'is-invalid': submitted && f.amount.errors }">
-                  <div *ngIf="transactionForm.get('amount').hasError('required') && transactionForm.get('amount').touched">Es requerido el monto</div>
+                  <div style='color:#de7c61' *ngIf="transactionForm.get('amount').hasError('required') && transactionForm.get('amount').touched">Es requerido el monto</div>
                 </div>
                 <div class="form-group" *ngIf="selectedType == 'TRANSFERENCIA_A_TERCEROS'">
-                  <label for="dniDestiny">Rut destino</label>
+                  <label for="dniDestiny">Rut destino <span style="font-size: 12px;">(sin digito verificador ni guión)</span></label>
 
                     <input formControlName="dniDestiny" type="text" name="dniDestiny" class="form-control"
                            id="dniDestiny">
-                    <div *ngIf="transactionForm.get('dniDestiny').hasError('required') && transactionForm.get('dniDestiny').touched">Es requerido el rut destino
+                    <div style='color:#de7c61' *ngIf="transactionForm.get('dniDestiny').hasError('required') && transactionForm.get('dniDestiny').touched">Es requerido el rut destino
 
                   </div>
                 </div>

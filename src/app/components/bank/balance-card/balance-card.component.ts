@@ -18,4 +18,8 @@ export class BalanceCardComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  formatCurrency = (value, digits = 0) => {
+    return new Intl.NumberFormat('de-DE', { maximumFractionDigits: digits }).format(value);
+  }
+
 }

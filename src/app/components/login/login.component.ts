@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CustomerDto} from '../../dto/Customer.dto';
 import {LoginService} from '../../services/login.service';
 import {LoginDto} from '../../dto/Login.dto';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,21 +10,28 @@ import {LoginDto} from '../../dto/Login.dto';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginDto: LoginDto = new LoginDto();
   isLoading = false;
   message: string;
   class: string;
+  loginForm: FormGroup;
 
   constructor(private loginService: LoginService,
-              private router: Router) {
+              private router: Router,
+              private formBuilder: FormBuilder) { this.loginForm = this.createFormGroupWithBuilderAndModel(formBuilder);
   }
 
   ngOnInit(): void {
   }
-
+  createFormGroupWithBuilderAndModel(formBuilder: FormBuilder) {
+    return formBuilder.group({
+      dni: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
+  }
   onSubmit(): void {
+    console.log(this.loginForm.value);
     this.isLoading = true;
-    this.loginService.login(this.loginDto).subscribe(data => {
+    this.loginService.login(this.loginForm.value).subscribe(data => {
       this.isLoading = false;
       this.loginService.addCurrentUser(data);
       this.router.navigate(['/bank']);

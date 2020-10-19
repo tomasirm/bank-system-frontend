@@ -1,6 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BankService} from '../../../services/bank.service';
-import {LoginService} from '../../../services/login.service';
 import {TransactionDto} from '../../../dto/Transaction.dto';
 import {CustomerDto} from '../../../dto/Customer.dto';
 
@@ -20,7 +18,7 @@ export class TransactionsTableComponent implements OnInit {
   p: number;
   ngOnInit(): void {
   }
-  displayActivePage(activePageNumber: number): void{
-    this.activePage = activePageNumber;
+  formatCurrency = (value, digits = 0) => {
+    return new Intl.NumberFormat('de-DE', { maximumFractionDigits: digits }).format(value);
   }
 }
