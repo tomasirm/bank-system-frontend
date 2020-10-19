@@ -21,7 +21,6 @@ export class BankComponent implements OnInit {
   transactions: TransactionDto[] = [];
   ngOnInit(): void {
     this.currentUser = this.loginService.currentCustomer;
-    console.log(this.currentUser);
     this.getTransactions();
     this.getBalance();
   }
@@ -36,7 +35,6 @@ export class BankComponent implements OnInit {
 
   getTransactions(): void{
     this.currentUser = this.loginService.currentCustomer;
-    console.log(JSON.stringify(this.currentUser));
     this.bankService.getTransactions(this.currentUser.dni).subscribe(data => {
       this.transactions = data;
       this.transactions = this.transactions.sort((a, b) =>  b.id - a.id);

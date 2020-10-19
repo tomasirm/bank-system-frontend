@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
     });
   }
   onSubmit(): void {
-    console.log(this.loginForm.value);
     this.isLoading = true;
     this.loginService.login(this.loginForm.value).subscribe(data => {
       this.isLoading = false;
@@ -40,7 +39,6 @@ export class LoginComponent implements OnInit {
       this.message = error.error.message;
       this.class = 'bg-danger text-light';
       this.isLoading = false;
-      console.log(error);
     });
   }
 

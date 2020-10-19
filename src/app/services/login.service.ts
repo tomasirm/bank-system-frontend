@@ -24,7 +24,6 @@ export class LoginService {
   }
 
   login(loginDto: LoginDto): Observable<any> {
-    console.log(this.ENDPOINT_URL);
     return this.http.post(this.ENDPOINT_URL + 'customer/login', loginDto);
   }
 
