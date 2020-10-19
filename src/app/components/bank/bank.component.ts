@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CustomerDto} from '../../dto/Customer.dto';
 import {LoginService} from '../../services/login.service';
 import {BankService} from '../../services/bank.service';
+import {TransactionDto} from '../../dto/Transaction.dto';
 
 @Component({
   selector: 'app-bank',
@@ -17,10 +18,11 @@ export class BankComponent implements OnInit {
   currentUser = new CustomerDto();
   balance: number;
   showToast = false;
-
+  transactions: TransactionDto[] = [];
   ngOnInit(): void {
     this.currentUser = this.loginService.currentCustomer;
     console.log(this.currentUser);
+    this.getTransactions();
     this.getBalance();
   }
 
@@ -30,5 +32,23 @@ export class BankComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+
+  getTransactions(): void{
+    this.currentUser = this.loginService.currentCustomer;
+    console.log(JSON.stringify(this.currentUser));
+    this.bankService.getTransactions(this.currentUser.dni).subscribe(data => {
+      this.transactions = data;
+      this.transactions = this.transactions.sort((a, b) =>  b.id - a.id);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  reciveTransactionEmitter(event): void{
+    if (event){
+      this.getTransactions();
+      this.getBalance();
+    }
   }
 }

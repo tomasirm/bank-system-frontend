@@ -16,16 +16,6 @@ export class TransactionsTableComponent implements OnInit {
   }
   @Input() currentUser: CustomerDto;
   @Input() balance: number;
-  transactions: TransactionDto[] = [];
-  ngOnInit(): void {
-    this.currentUser = this.loginService.currentCustomer;
-    console.log(JSON.stringify(this.currentUser));
-    this.bankService.getTransactions(this.currentUser.dni).subscribe(data => {
-      this.transactions = data;
-      this.transactions = this.transactions.sort((a, b) =>  b.id - a.id);
-    }, error => {
-      console.log(error);
-    });
-  }
-
+  @Input() transactions: TransactionDto[] = [];
+  ngOnInit(): void {}
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {CustomerDto} from '../../../../dto/Customer.dto';
@@ -26,6 +26,7 @@ export class ModalComponent implements OnInit {
   transactionForm: FormGroup;
   transactionTypeStr = '';
   selectedType = 'CARGA_SALDO';
+  @Output() transactionEmitter = new EventEmitter<boolean>();
 
   ngOnInit(): void {
     this.currentUser = this.loginService.currentCustomer;
@@ -52,6 +53,7 @@ export class ModalComponent implements OnInit {
     console.log(JSON.stringify(this.transactionForm.value));
     this.transactionService.saveTransaction(this.transactionForm.value.transactionDto).subscribe(data => {
       console.log(data);
+      this.transactionEmitter.emit(true);
     }, error => {
       console.log(error);
     });
